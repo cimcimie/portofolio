@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Text Example</title>
+    <title>Tebak bang
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1 style="font-size: 2em; color: rgb(255, 0, 0); text-align: center;">GAPUNYA TIK TOK BANG</h1>
+   
+<div id="game" class="container my-5">
+    <h3 class="text-center mb-4">Tebak Angka</h3>
+    <p id="message" class="text-center mb-3"></p>
+    <input type="number" id="guessInput" class="form-control mb-3" placeholder="Masukkan tebakan Anda" />
+    <button id="guessButton" class="btn btn-pink">Coba</button>
+  </div>
+  
+  <script>
+   
+    const secretNumber = Math.floor(Math.random() * 10) + 1;
+    let attempts = 3;
+  
+    const messageElement = document.getElementById('message');
+    const guessInput = document.getElementById('guessInput');
+    const guessButton = document.getElementById('guessButton');
+  
+    guessButton.addEventListener('click', () => {
+      const userGuess = parseInt(guessInput.value);
+  
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
+        setMessage('Masukkan angka antara 1 dan 10', 'red');
+        return;
+      }
+  
+      if (userGuess === secretNumber) {
+        setMessage('Selamat! Anda berhasil menebak angka yang benar.', 'green');
+        disableInput();
+      } else {
+        attempts--;
+        if (attempts === 0) {
+          setMessage(`Maaf, Anda kehabisan kesempatan. Angka yang benar adalah ${secretNumber}.`, 'red');
+          disableInput();
+        } else {
+          setMessage(`Tebakan Anda salah. Sisa kesempatan: ${attempts}`, 'red');
+        }
+      }
+    });
+  
+    function setMessage(message, color) {
+      messageElement.textContent = message;
+      messageElement.style.color = color;
+    }
+  
+    function disableInput() {
+      guessInput.disabled = true;
+      guessButton.disabled = true;
+    }
+  </script>
+  
 </body>
 </html>
